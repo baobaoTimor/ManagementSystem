@@ -25,7 +25,7 @@
 
 @media (min-width: @screen-md-min) {
   .container {
-    background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+    background-image: url('../assets/plumage.jpg');
     background-repeat: no-repeat;
     background-position: center 110px;
     background-size: 100%;
@@ -33,11 +33,14 @@
 
   .content {
     padding: 32px 0 24px;
+    display: flex;
+    align-items: center;
   }
 }
 
 .top {
   text-align: center;
+  width: 50%;
 }
 
 .header {
@@ -68,4 +71,21 @@
   margin-bottom: 40px;
   color: @text-color-secondary;
   font-size: @font-size-base;
+}
+
+.footer{
+  height: 124px;
+  background:#f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.love{
+  margin:0 10px;
+}
+
+.proLayout{
+  :global(.ant-pro-sider-logo img){
+    display: none !important;
+  }
 }
