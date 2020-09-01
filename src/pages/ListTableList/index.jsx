@@ -100,7 +100,7 @@ const TableList = () => {
       title: '月薪',
       dataIndex: 'callNo',
       sorter: true,
-      // hideInForm: true,
+      hideInForm: true,
       renderText: val => `${val} 片金叶子`,
     },
     {
@@ -208,10 +208,10 @@ const TableList = () => {
         tableAlertRender={({ selectedRowKeys, selectedRows }) => (
           <div>
             已选择
-            <a style={{ fontWeight: 600 }} >
+            <a style={{ fontWeight: 600 ,margin:'0 5px'}} >
               {selectedRowKeys.length}
             </a>
-            项&nbsp;&nbsp;
+            位&nbsp;&nbsp;
             <span>
               月薪总计 {selectedRows.reduce((pre, item) => pre + Number(item.callNo), 0)} 片金叶子
             </span>
