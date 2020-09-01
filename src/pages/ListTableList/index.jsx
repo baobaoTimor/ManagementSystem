@@ -1,11 +1,14 @@
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, Dropdown, Menu, message, Input } from 'antd';
+import { Button, Divider, Dropdown, Menu, message} from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
+import moment from 'moment';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { queryRule, updateRule, addRule, removeRule } from './service';
+
+
 /**
  * 添加节点
  * @param fields
@@ -25,6 +28,7 @@ const handleAdd = async fields => {
     return false;
   }
 };
+
 /**
  * 更新节点
  * @param fields
@@ -32,7 +36,6 @@ const handleAdd = async fields => {
 
 const handleUpdate = async fields => {
   const hide = message.loading('正在配置');
-
   try {
     await updateRule({
       name: fields.name,
@@ -48,15 +51,14 @@ const handleUpdate = async fields => {
     return false;
   }
 };
+
 /**
  *  删除节点
  * @param selectedRows
  */
-
 const handleRemove = async selectedRows => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
-
   try {
     await removeRule({
       key: selectedRows.map(row => row.key),
@@ -71,33 +73,35 @@ const handleRemove = async selectedRows => {
   }
 };
 
+
 const TableList = () => {
   const [createModalVisible, handleModalVisible] = useState(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
-  const actionRef = useRef();
+  const actionRef = useRef(); 
   const columns = [
     {
-      title: '规则名称',
+      title: '天堂人员名称',
       dataIndex: 'name',
       rules: [
         {
           required: true,
-          message: '规则名称为必填项',
+          message: '天堂人员名称为必填项',
         },
       ],
     },
     {
-      title: '描述',
+      title: '职位描述',
       dataIndex: 'desc',
+      width:'300px',
       valueType: 'textarea',
     },
     {
-      title: '服务调用次数',
+      title: '月薪',
       dataIndex: 'callNo',
       sorter: true,
-      hideInForm: true,
-      renderText: val => `${val} 万`,
+      // hideInForm: true,
+      renderText: val => `${val} 片金叶子`,
     },
     {
       title: '状态',
@@ -105,46 +109,45 @@ const TableList = () => {
       hideInForm: true,
       valueEnum: {
         0: {
-          text: '关闭',
+          text: '已下凡渡劫中',
           status: 'Default',
         },
         1: {
-          text: '运行中',
+          text: '刚飞升',
           status: 'Processing',
         },
         2: {
-          text: '已上线',
+          text: '正常',
           status: 'Success',
         },
         3: {
           text: '异常',
           status: 'Error',
         },
+        4: {
+          text: '休息',
+          status: 'Warning',
+        },
+        5: {
+          text: '玩耍',
+          status: 'Processing',
+        },
       },
     },
     {
-      title: '上次调度时间',
-      dataIndex: 'updatedAt',
+      title: '飞升时间',
+      dataIndex: 'createdAt',
       sorter: true,
-      valueType: 'dateTime',
+      valueType: 'date',
       hideInForm: true,
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-
-        if (`${status}` === '0') {
-          return false;
-        }
-
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder="请输入异常原因！" />;
-        }
-
-        return defaultRender(item);
-      },
+      render:val =>(
+          <div>{moment(val).format('YYYY-MM-DD')}</div>
+        )
     },
     {
       title: '操作',
       dataIndex: 'option',
+      align:'center',
       valueType: 'option',
       render: (_, record) => (
         <>
@@ -154,23 +157,30 @@ const TableList = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            修改
           </a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <a style={{color:'red'}} onClick={ async ()=>{ 
+            await handleRemove(Array(record))
+            const { reload } = actionRef.current
+              reload()
+            }
+            }>删除</a>
         </>
       ),
     },
   ];
+
+
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="查询表格"
+        headerTitle="天堂人员列表"
         actionRef={actionRef}
         rowKey="key"
         toolBarRender={(action, { selectedRows }) => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
+            <PlusOutlined /> 新增
           </Button>,
           selectedRows && selectedRows.length > 0 && (
             <Dropdown
@@ -197,21 +207,17 @@ const TableList = () => {
         ]}
         tableAlertRender={({ selectedRowKeys, selectedRows }) => (
           <div>
-            已选择{' '}
-            <a
-              style={{
-                fontWeight: 600,
-              }}
-            >
+            已选择
+            <a style={{ fontWeight: 600 }} >
               {selectedRowKeys.length}
-            </a>{' '}
+            </a>
             项&nbsp;&nbsp;
             <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
+              月薪总计 {selectedRows.reduce((pre, item) => pre + Number(item.callNo), 0)} 片金叶子
             </span>
           </div>
         )}
-        request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryRule({...params, sorter,filter})}
         columns={columns}
         rowSelection={{}}
       />

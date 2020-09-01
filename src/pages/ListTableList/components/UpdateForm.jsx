@@ -16,6 +16,7 @@ const formLayout = {
 };
 
 const UpdateForm = props => {
+  // 初始化列表带出来的信息
   const [formVals, setFormVals] = useState({
     name: props.values.name,
     desc: props.values.desc,
@@ -35,8 +36,10 @@ const UpdateForm = props => {
     values,
   } = props;
 
+  // 下一步
   const forward = () => setCurrentStep(currentStep + 1);
 
+  // 上一步
   const backward = () => setCurrentStep(currentStep - 1);
 
   const handleNext = async () => {
@@ -51,30 +54,32 @@ const UpdateForm = props => {
   };
 
   const renderContent = () => {
+    // 步骤二页面内容
     if (currentStep === 1) {
       return (
         <>
-          <FormItem name="target" label="监控对象">
+          <FormItem name="target" label="工作区域">
             <Select
               style={{
                 width: '100%',
               }}
             >
-              <Option value="0">表一</Option>
-              <Option value="1">表二</Option>
+              <Option value="0">昊天通明宫</Option>
+              <Option value="1">太微玉清宫</Option>
+              <Option value="1">通明大殿</Option>
             </Select>
           </FormItem>
-          <FormItem name="template" label="规则模板">
+          <FormItem name="template" label="所属上司">
             <Select
               style={{
                 width: '100%',
               }}
             >
-              <Option value="0">规则模板一</Option>
-              <Option value="1">规则模板二</Option>
+              <Option value="0">玉帝</Option>
+              <Option value="1">如来佛祖</Option>
             </Select>
           </FormItem>
-          <FormItem name="type" label="规则类型">
+          <FormItem name="type" label="重要性">
             <RadioGroup>
               <Radio value="0">强</Radio>
               <Radio value="1">弱</Radio>
@@ -83,7 +88,7 @@ const UpdateForm = props => {
         </>
       );
     }
-
+    // 步骤三页面内容
     if (currentStep === 2) {
       return (
         <>
@@ -120,15 +125,16 @@ const UpdateForm = props => {
       );
     }
 
+    // 步骤一页面页面
     return (
       <>
         <FormItem
           name="name"
-          label="规则名称"
+          label="天堂人员名称"
           rules={[
             {
               required: true,
-              message: '请输入规则名称！',
+              message: '请输入天堂人员名称名称！',
             },
           ]}
         >
@@ -136,11 +142,11 @@ const UpdateForm = props => {
         </FormItem>
         <FormItem
           name="desc"
-          label="规则描述"
+          label="职位描述"
           rules={[
             {
               required: true,
-              message: '请输入至少五个字符的规则描述！',
+              message: '请输入至少五个字符的职位描述！',
               min: 5,
             },
           ]}
@@ -152,6 +158,7 @@ const UpdateForm = props => {
   };
 
   const renderFooter = () => {
+    // 第二个步骤页底部内容
     if (currentStep === 1) {
       return (
         <>
@@ -171,6 +178,7 @@ const UpdateForm = props => {
       );
     }
 
+    // 第三个步骤页底部内容
     if (currentStep === 2) {
       return (
         <>
@@ -190,6 +198,7 @@ const UpdateForm = props => {
       );
     }
 
+    // 第一个步骤页底部内容
     return (
       <>
         <Button onClick={() => handleUpdateModalVisible(false, values)}>取消</Button>
@@ -220,8 +229,8 @@ const UpdateForm = props => {
         current={currentStep}
       >
         <Step title="基本信息" />
-        <Step title="配置规则属性" />
-        <Step title="设定调度周期" />
+        <Step title="配置人员工作" />
+        <Step title="设定工作周期" />
       </Steps>
       <Form
         {...formLayout}

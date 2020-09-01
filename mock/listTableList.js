@@ -1,28 +1,21 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 import { parse } from 'url';
+import personnel from './PersonnelList';
 
-// mock tableListDataSource
-const genList = (current, pageSize) => {
+// mock tableListDataSource,current,pageSize
+const genList = (current) => {
   const tableListDataSource = [];
-
-  for (let i = 0; i < pageSize; i += 1) {
+  for (let i = 0; i < personnel.length; i += 1) {
     const index = (current - 1) * 10 + i;
     tableListDataSource.push({
-      key: index,
+      key:index,
       disabled: i % 6 === 0,
-      href: 'https://ant.design',
-      avatar: [
-        'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-        'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-      ][i % 2],
-      name: `TradeCode ${index}`,
-      owner: '曲丽丽',
-      desc: '这是一段描述',
-      callNo: Math.floor(Math.random() * 1000),
-      status: Math.floor(Math.random() * 10) % 4,
-      updatedAt: new Date(),
-      createdAt: new Date(),
-      progress: Math.ceil(Math.random() * 100),
+      name: personnel[i].name,
+      owner: 'Timor',
+      desc: personnel[i].note,
+      callNo: personnel[i].callNo,
+      status:personnel[i].status,
+      createdAt: personnel[i].risingTime,
     });
   }
 
@@ -32,6 +25,7 @@ const genList = (current, pageSize) => {
 
 let tableListDataSource = genList(1, 100);
 
+// 处理搜索,排序的列表结果
 function getRule(req, res, u) {
   let realUrl = u;
 
@@ -88,10 +82,27 @@ function getRule(req, res, u) {
     }
   }
 
-  if (params.name) {
-    dataSource = dataSource.filter(data => data.name.includes(params.name || ''));
+  // 搜索结果
+  switch(params.name || params.desc || params.callNo || params.status || params.createdAt){
+    case params.name:
+      dataSource = dataSource.filter(data => data.name.includes(params.name || ''))
+      break;
+    case params.desc:
+      dataSource = dataSource.filter(data => data.desc.includes(params.desc || ''))
+      break;
+    case params.callNo:
+      dataSource = dataSource.filter(data => String(data.callNo).includes(params.callNo || 0))
+      break;
+    case params.status:
+      dataSource = dataSource.filter(data => String(data.status).includes(params.status || 0))
+      break;
+    case params.createdAt:
+      dataSource = dataSource.filter(data => String(data.createdAt).includes(params.createdAt || ''))
+      break;
+    default:
+      break;
   }
-
+  
   const result = {
     data: dataSource,
     total: tableListDataSource.length,
@@ -120,22 +131,14 @@ function postRule(req, res, u, b) {
 
     case 'post':
       (() => {
-        const i = Math.ceil(Math.random() * 10000);
         const newRule = {
           key: tableListDataSource.length,
-          href: 'https://ant.design',
-          avatar: [
-            'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-            'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-          ][i % 2],
           name,
-          owner: '曲丽丽',
+          owner: 'Timor',
           desc,
-          callNo: Math.floor(Math.random() * 1000),
-          status: Math.floor(Math.random() * 10) % 2,
-          updatedAt: new Date(),
+          callNo: Math.floor(Math.random() * 100), // 刚飞升上来的月薪比例
+          status: 1, // 新增的时候刚飞升
           createdAt: new Date(),
-          progress: Math.ceil(Math.random() * 100),
         };
         tableListDataSource.unshift(newRule);
         return res.json(newRule);
