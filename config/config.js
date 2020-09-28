@@ -56,20 +56,10 @@ export default defineConfig({
               component: './Welcome',
             },
             {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-              routes: [
-                {
-                  path: '/admin/sub-page',
-                  name: 'sub-page',
-                  icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
-                },
-              ],
+              name: 'system',
+              icon: 'dashboard',
+              component: './adminControl/menu',
+              path: './adminControl/menu',
             },
             {
               name: 'list.table-list',

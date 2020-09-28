@@ -1,4 +1,3 @@
-
 import { parse } from 'url';
 import personnel from './PersonnelList';
 
@@ -8,13 +7,13 @@ const genList = (current) => {
   for (let i = 0; i < personnel.length; i += 1) {
     const index = (current - 1) * 10 + i;
     tableListDataSource.push({
-      key:index,
+      key: index,
       disabled: i % 6 === 0,
       name: personnel[i].name,
       owner: 'Timor',
       desc: personnel[i].note,
       callNo: personnel[i].callNo,
-      status:personnel[i].status,
+      status: personnel[i].status,
       createdAt: personnel[i].risingTime,
     });
   }
@@ -41,7 +40,7 @@ function getRule(req, res, u) {
   if (sorter) {
     dataSource = dataSource.sort((prev, next) => {
       let sortNumber = 0;
-      Object.keys(sorter).forEach(key => {
+      Object.keys(sorter).forEach((key) => {
         if (sorter[key] === 'descend') {
           if (prev[key] - next[key] > 0) {
             sortNumber += -1;
@@ -66,8 +65,8 @@ function getRule(req, res, u) {
     const filter = JSON.parse(params.filter);
 
     if (Object.keys(filter).length > 0) {
-      dataSource = dataSource.filter(item =>
-        Object.keys(filter).some(key => {
+      dataSource = dataSource.filter((item) =>
+        Object.keys(filter).some((key) => {
           if (!filter[key]) {
             return true;
           }
@@ -83,26 +82,28 @@ function getRule(req, res, u) {
   }
 
   // 搜索结果
-  switch(params.name || params.desc || params.callNo || params.status || params.createdAt){
+  switch (params.name || params.desc || params.callNo || params.status || params.createdAt) {
     case params.name:
-      dataSource = dataSource.filter(data => data.name.includes(params.name || ''))
+      dataSource = dataSource.filter((data) => data.name.includes(params.name || ''));
       break;
     case params.desc:
-      dataSource = dataSource.filter(data => data.desc.includes(params.desc || ''))
+      dataSource = dataSource.filter((data) => data.desc.includes(params.desc || ''));
       break;
     case params.callNo:
-      dataSource = dataSource.filter(data => String(data.callNo).includes(params.callNo || 0))
+      dataSource = dataSource.filter((data) => String(data.callNo).includes(params.callNo || 0));
       break;
     case params.status:
-      dataSource = dataSource.filter(data => String(data.status).includes(params.status || 0))
+      dataSource = dataSource.filter((data) => String(data.status).includes(params.status || 0));
       break;
     case params.createdAt:
-      dataSource = dataSource.filter(data => String(data.createdAt).includes(params.createdAt || ''))
+      dataSource = dataSource.filter((data) =>
+        String(data.createdAt).includes(params.createdAt || ''),
+      );
       break;
     default:
       break;
   }
-  
+
   const result = {
     data: dataSource,
     total: tableListDataSource.length,
@@ -126,7 +127,7 @@ function postRule(req, res, u, b) {
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
-      tableListDataSource = tableListDataSource.filter(item => key.indexOf(item.key) === -1);
+      tableListDataSource = tableListDataSource.filter((item) => key.indexOf(item.key) === -1);
       break;
 
     case 'post':
@@ -149,7 +150,7 @@ function postRule(req, res, u, b) {
     case 'update':
       (() => {
         let newRule = {};
-        tableListDataSource = tableListDataSource.map(item => {
+        tableListDataSource = tableListDataSource.map((item) => {
           if (item.key === key) {
             newRule = { ...item, desc, name };
             return { ...item, desc, name };
