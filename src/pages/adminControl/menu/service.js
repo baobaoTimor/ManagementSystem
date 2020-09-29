@@ -7,7 +7,7 @@ export async function menuSetting() {
 
 // 获取子集菜单
 export async function menuChild(data) {
-  return request('/api/menu/child', data);
+  return request(`/api/menu/child?menuCode=${data}`);
 }
 
 // 保存菜单

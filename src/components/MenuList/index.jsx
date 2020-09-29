@@ -8,7 +8,8 @@ const ListItem = List.Item;
 const { Text } = Typography;
 
 const Index = (props) => {
-  const { menuData, menuName, selectedId, id } = props;
+  const { menuData, menuName, selectedId, handleClick } = props;
+  // console.log('menuData---', menuData, selectedId)
   return (
     <div className={styles.menuWrapper}>
       <ListItem className={styles.title}>
@@ -24,12 +25,14 @@ const Index = (props) => {
         itemLayout="horizontal"
         dataSource={menuData}
         bordered={false}
-        className={id === selectedId ? styles.active : ''}
-        renderItem={(item1, index1) => (
-          <ListItem className={styles.item}>
+        renderItem={(item, index) => (
+          <ListItem
+            className={`${selectedId === item.menuCode ? styles.active : ''} ${styles.item}`}
+            onClick={() => handleClick(item.menuCode)}
+          >
             <Row type="flex" justify="space-between" className={styles.itemList}>
               <Text strong className={styles.titleName}>
-                {`${Number(index1) + 1}`}、{item1.menuName}
+                {`${Number(index) + 1}`}、{item.menuName}
               </Text>
               <Tooltip title="编辑">
                 <a>
@@ -37,7 +40,7 @@ const Index = (props) => {
                 </a>
               </Tooltip>
             </Row>
-            <CodeTag level={item1.menuLevel}>{item1.menuCode}</CodeTag>
+            <CodeTag level={item.menuLevel}>{item.menuCode}</CodeTag>
           </ListItem>
         )}
       />

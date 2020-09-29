@@ -10,14 +10,12 @@ export default {
       const datas = yield call(service.menuSetting, payload);
       callback(datas);
     },
-    // // 查菜单下级列表
-    // *getMenuChild({ payload }, sagaEffects) {
-    //   const { call } = sagaEffects;
-    //   // console.log('payload-----', payload);
-    //   // const datas = yield call(service.menuChild, payload);
-    //   // console.log('datas', datas);
-    //   // callback(datas)
-    // },
+    // 查菜单下级列表
+    *getMenuChild({ payload, callback }, sagaEffects) {
+      const { call } = sagaEffects;
+      const datas = yield call(service.menuChild, payload);
+      callback(datas);
+    },
     // 保存
     *menuSave({ payload, callback }, sagaEffects) {
       const { call } = sagaEffects;
