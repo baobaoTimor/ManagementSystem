@@ -10,7 +10,6 @@ const menuList = (props) => {
   const [menuData, setMenuList] = useState([]); // 菜单组列表
   const [menuListActive, setMenuListActive] = useState({}); // 菜单组选中的列
   const [menuChildData, setMenuChildList] = useState([]); // 菜单页面列表
-  const [menuChildActive, setMenuChildActive] = useState({}); // 菜单页面列表选中的列
 
   // DidMount
   useEffect(() => {
@@ -40,19 +39,16 @@ const menuList = (props) => {
           // 菜单页面列表
           const { children } = value.list[0] || [];
           setMenuChildList(children);
-          setMenuChildActive(children[0].menuCode);
         },
       });
     }
   }, [menuListActive]);
 
+  // 点击菜单组把点击的code更新一下
   const onClick = (code) => {
     setMenuListActive(code);
   };
 
-  const onClick1 = (code) => {
-    setMenuChildActive(code);
-  };
   return (
     <PageHeaderWrapper>
       <Row gutter={24}>
@@ -68,8 +64,7 @@ const menuList = (props) => {
           <MenuList
             menuData={menuChildData}
             menuName="菜单页面"
-            selectedId={menuChildActive}
-            handleClick={(code) => onClick1(code)}
+            handleClick={() => { return false }}
           />
         </Col>
       </Row>

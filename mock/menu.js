@@ -9,7 +9,7 @@ function getchildList(req, res) {
         menucode: menuCode,
         list: [
           {
-            id: '351368eb47ecd3260c07354b89dfd0d2',
+            id: '351368eb472gg4t31289dfd0d2',
             menuCode: 'adminCenter',
             menuLevel: '1',
             menuName: '管理中心',
@@ -18,16 +18,17 @@ function getchildList(req, res) {
                 menuCode: 'roleSetting',
                 menuLevel: '2',
                 menuName: '角色管理',
+                url: '/personnel/personnelManagement',
               },
               {
-                id: '5a6dcbca653440699be844fbb6f9c39b',
+                id: '5a6dcbca6534402342rc239c39b',
                 menuCode: 'systemLog',
                 menuLevel: '2',
                 menuName: '系统日志',
                 url: '/personnel/personnelManagement',
               },
               {
-                id: '5a6dcbca653440699be844fbb6f9c39b',
+                id: '5a6dcbca623rvg3g6f9c39b',
                 menuCode: 'approvalConfig',
                 menuLevel: '2',
                 menuName: '审批流配置',
@@ -51,21 +52,21 @@ function getchildList(req, res) {
             menuName: '人员区域',
             children: [
               {
-                id: '5a6dcbca6587uih90699be844fbb6f9c39b',
+                id: '5a6dcbcaefgvefg23422336f9c39b',
                 menuCode: 'territoryAndIns',
                 menuLevel: '2',
                 menuName: '岗位辖区管理',
               },
               {
-                id: '5a6dcbca653440699be844fbb6f9c39b',
+                id: '5a6dcbc2342323rf2f2f4bb6f9c39b',
                 menuCode: 'adminStaff',
                 menuLevel: '2',
                 menuName: '人员管理',
                 url: '/personnel/personnelManagement',
               },
               {
-                id: '5a6dcbca653440699be844fbb6f9c39b',
-                menuCode: 'adminStaff',
+                id: '5a6dcbc2323r2f2f24gergf9c39b',
+                menuCode: 'adminList',
                 menuLevel: '2',
                 menuName: '人员列表',
                 url: '/personnel/personnelManagement',
@@ -82,7 +83,7 @@ function getchildList(req, res) {
         status: 'success',
         list: [
           {
-            id: '351368eb47ecd3260c07354b89dfd0d2',
+            id: '351368eb47e1312b89dfd0d2',
             menuCode: 'business',
             menuLevel: '1',
             menuName: '业务填报',
@@ -91,16 +92,17 @@ function getchildList(req, res) {
                 menuCode: 'approvalCenter1',
                 menuLevel: '2',
                 menuName: '审批中心',
+                url: '/personnel/personnelManagement',
               },
               {
-                id: '5a6dcbca653440699be844fbb6f9c39b',
+                id: '5a6dcbca653440691fv239be844fbb6f9c39b',
                 menuCode: 'descentApproval',
                 menuLevel: '2',
                 menuName: '下凡申请',
                 url: '/personnel/personnelManagement',
               },
               {
-                id: '5a6dcbca653440699be844fbb6f9c39b',
+                id: '5a6dcbca65344130699be844fbb6f9c39b',
                 menuCode: 'soaringApproval',
                 menuLevel: '2',
                 menuName: '飞升申请',

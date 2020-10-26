@@ -1,4 +1,6 @@
 /lambda/
 /scripts
+src/assets
+src/
 /config
 .history

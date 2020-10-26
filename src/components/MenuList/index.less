@@ -22,8 +22,15 @@
     }
   }
   .active {
-    margin-left: 0;
-    padding-left: 20px;
-    border-left: 2px solid #1890ff;
+    position: relative;
+  }
+  .active:after{
+    position: absolute;
+    top: 0;
+    left: -20px;
+    width: 2px;
+    height: 69px;
+    background: #3fa3ff;
+    content: '';
   }
 }
